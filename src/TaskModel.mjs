@@ -12,7 +12,7 @@ export default class TaskModel extends TaskList {
     }
 
     find(id) {
-        const index = this.list.findIndex((item) => item.id === id);
+        const index = this.list.findIndex((item) => item.id === parseInt(id));
 
         if (index >= 0) {
             return this.list[index];
@@ -42,13 +42,15 @@ export default class TaskModel extends TaskList {
     }
 
     remove(id, onError) {
-        if (this.find(id)) {
+        let task = this.find(id);
+        if (task) {
             this.api.removeFromTask(
                 () => {
-                    this.remove(id);
+                    return this.list.splice(task.id, 1);
                 },
                 onError,
-                this.list[id]
+                this.list,
+                id
             );
         }
     }

@@ -34,17 +34,18 @@ function addTask(event) {
 
 addBtn.addEventListener("click", addTask);
 
-// todo
-//
-// function closeClickHandler(event) {
-//     task.remove(event.currentTarget.parentNode.id);
-//     location.reload();
-// }
-//
-// let closeButtons = document.querySelectorAll(".close");
-// closeButtons.forEach(button => {
-//     button.addEventListener("click", closeClickHandler);
-// });
+const $todos = document.querySelector('.task-list');
+$todos.addEventListener('click', function (event) {
+    if (event.target.tagName === 'LI') {
+        event.target.classList.toggle('checked');
+        // todo update in server
+    }
+    if (event.target.tagName === "SPAN" && event.target.classList.contains("close")) {
+        let id = event.target.parentNode.id;
+        task.remove(id);
+        location.reload();
+    }
+}, false);
 
 
 
