@@ -55,6 +55,25 @@ app.delete('/api/v1/task/:id', (req, res) => {
   })
 });
 
+app.put('/api/v1/task/:id', (req, res) => {
+    fs.readFile(task_path, 'utf-8', (err, data) => {
+        if (!err) {
+            const tasks = JSON.parse(data);
+            let index = tasks.findIndex(task => task.id === parseInt(req.params.id));
+            if (index >= 0) {
+                tasks[index].completed = !tasks[index].completed;
+                fs.writeFile(task_path, JSON.stringify(tasks), 'utf-8', () => {
+                    res.sendStatus(200);
+                });
+            } else {
+                res.status(404).send("record not found");
+            }
+        } else {
+            res.status(500).send(err);
+        }
+    })
+});
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 });

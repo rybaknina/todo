@@ -24,8 +24,14 @@ function addTask(event) {
     if (name.trim() === "") {
         alert("You must write something!");
     } else {
-        let i = document.querySelectorAll(".task-item").length + 1;
-        let newTask = {id: i, name: name, completed: false};
+        let index = 0;
+        let taskList = document.querySelectorAll(".task-item");
+        taskList.forEach(task => {
+            if (task.id > index) {
+                index = task.id;
+            }
+        });
+        let newTask = {id: ++index, name: name, completed: false};
         task.add(newTask);
         location.reload();
     }
@@ -37,8 +43,9 @@ addBtn.addEventListener("click", addTask);
 const $todos = document.querySelector('.task-list');
 $todos.addEventListener('click', function (event) {
     if (event.target.tagName === 'LI') {
-        event.target.classList.toggle('checked');
-        // todo update in server
+        let id = event.target.id;
+        task.update(id);
+        location.reload();
     }
     if (event.target.tagName === "SPAN" && event.target.classList.contains("close")) {
         let id = event.target.parentNode.id;

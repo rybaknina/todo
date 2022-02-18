@@ -54,4 +54,19 @@ export default class TaskModel extends TaskList {
             );
         }
     }
+
+    update(id, onError) {
+        let task = this.find(id);
+        if (task) {
+            this.api.updateTask(
+                () => {
+                    task.completed = !task.completed;
+                    return this.list;
+                },
+                onError,
+                this.list,
+                id
+            );
+        }
+    }
 }

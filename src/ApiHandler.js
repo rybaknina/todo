@@ -15,6 +15,10 @@ export default class ApiHandler {
         this.send(onError, onSuccess, `${this.apiUrl}/task/` + id, 'DELETE', JSON.stringify(data), {"Content-Type": "application/json"});
     }
 
+    updateTask(onSuccess, onError, data, id) {
+        this.send(onError, onSuccess, `${this.apiUrl}/task/` + id, 'PUT', JSON.stringify(data), {"Content-Type": "application/json"});
+    }
+
     send(onError, onSuccess, url, method = 'GET', data = '', headers = {}, timeout = 60000) {
 
         let xhr;
